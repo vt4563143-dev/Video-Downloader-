@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Free Video Downloader - YouTube, Instagram, Telegram</title>
+    <meta name="description" content="Download videos from YouTube, Instagram, Telegram for free. One-click video downloader.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .supported-platforms {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .platform {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .platform-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Free Video Downloader</h1>
+        <p class="subtitle">Download from YouTube, Instagram, Telegram - 100% Free</p>
+        
+        <div class="input-group">
+            <input type="text" id="videoUrl" placeholder="📌 Paste your video link here...">
+        </div>
+        
+        <button onclick="downloadVideo()">⬇️ Download Now</button>
+        
+        <div class="supported-platforms">
+            <h3>✅ Supported Platforms:</h3>
+            <div class="platform"><span class="platform-icon">📺</span> YouTube</div>
+            <div class="platform"><span class="platform-icon">📷</span> Instagram</div>
+            <div class="platform"><span class="platform-icon">✈️</span> Telegram</div>
+        </div>
+        
+        <div class="instructions">
+            <p>Simply paste the link and click Download!</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadVideo() {
+            const url = document.getElementById('videoUrl').value.trim();
+            
+            if(!url) {
+                alert('❌ Please enter a video link');
+                return;
+            }
+            
+            if(url.includes('youtube.com') || url.includes('youtu.be')) {
+                window.open('https://yt5s.com/en32?q=' + encodeURIComponent(url), '_blank');
+            }
+            else if(url.includes('instagram.com')) {
+                window.open('https://downloadgram.com/we?url=' + encodeURIComponent(url), '_blank');
+            }
+            else if(url.includes('t.me')) {
+                alert('📱 For Telegram: Use the download option within Telegram app');
+            }
+            else {
+                alert('❌ Please enter a valid YouTube or Instagram link');
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') {
+                downloadVideo();
+            }
+        });
+    </script>
+</body>
+</html>
