@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Downloader - Download Instagram & YouTube Videos</title>
+    <title>Fast Video Downloader - Instagram & YouTube</title>
     <style>
         * {
             margin: 0;
@@ -12,123 +12,196 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: #333;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 100%;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             overflow: hidden;
+            margin: 0 auto;
         }
 
         .header {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
-            padding: 30px;
+            padding: 20px 15px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
         }
 
         .security-badge {
             display: inline-block;
             background: #27ae60;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 5px;
         }
 
         .main-content {
-            padding: 30px;
+            padding: 20px 15px;
         }
 
+        /* Tabs Styling - Improved */
         .tabs {
             display: flex;
             margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 4px;
+            gap: 4px;
         }
 
         .tab-btn {
-            padding: 12px 30px;
-            background: none;
+            flex: 1;
+            padding: 12px 8px;
+            background: transparent;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #666;
         }
 
         .tab-btn.active {
-            border-bottom: 3px solid #3498db;
-            color: #3498db;
-            font-weight: bold;
+            background: #3498db;
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
         }
 
         .tab-content {
             display: none;
-            padding: 20px 0;
+            padding: 15px 0;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-content h3::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #instagram-tab h3::before {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>');
+        }
+
+        #youtube-tab h3::before {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FF0000"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>');
+        }
+
+        .tab-content p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
         .input-group {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
         input[type="url"] {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            background: #fafafa;
         }
 
         input[type="url"]:focus {
             outline: none;
             border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         button {
-            padding: 15px 30px;
-            background: #3498db;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
 
         button:hover {
-            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         button:disabled {
             background: #bdc3c7;
+            transform: none;
+            box-shadow: none;
             cursor: not-allowed;
         }
 
         .result {
             margin-top: 20px;
-            padding: 20px;
+            padding: 18px;
             border-radius: 8px;
             display: none;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .success {
@@ -145,10 +218,35 @@
 
         .privacy-policy {
             background: #f8f9fa;
-            padding: 20px;
-            margin-top: 30px;
+            padding: 18px;
+            margin-top: 25px;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        .privacy-policy h4 {
+            margin-bottom: 12px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .privacy-policy ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .privacy-policy li {
+            padding: 6px 0;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .privacy-policy li:last-child {
+            border-bottom: none;
         }
 
         .loading {
@@ -158,13 +256,13 @@
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto 10px;
+            width: 35px;
+            height: 35px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
         }
 
         @keyframes spin {
@@ -174,56 +272,81 @@
 
         .footer {
             text-align: center;
-            padding: 20px;
+            padding: 18px;
             background: #2c3e50;
             color: white;
-            margin-top: 30px;
+            margin-top: 25px;
+            font-size: 0.85rem;
         }
 
-        .video-preview {
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .video-preview video {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .footer p {
+            margin: 4px 0;
         }
 
         .download-btn {
             display: inline-block;
-            background: #27ae60;
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
             color: white;
-            padding: 12px 25px;
+            padding: 12px 24px;
             text-decoration: none;
             border-radius: 6px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background 0.3s;
+            font-weight: 600;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
         }
 
         .download-btn:hover {
-            background: #219653;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
         }
 
-        @media (max-width: 768px) {
-            .input-group {
-                flex-direction: column;
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 15px 10px;
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
+            
+            .main-content {
+                padding: 15px 10px;
+            }
+            
+            .tab-btn {
+                padding: 10px 6px;
+                font-size: 0.9rem;
+            }
+            
+            input[type="url"] {
+                padding: 12px;
+            }
+            
+            button {
+                padding: 14px;
+            }
+        }
+
+        /* Performance Optimizations */
+        .performance-optimized {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container performance-optimized">
         <div class="header">
-            <h1>Video Downloader</h1>
-            <p>100% Working | No Ads | Direct Download</p>
-            <div class="security-badge">🔒 Direct Download</div>
+            <h1>Fast Video Downloader</h1>
+            <p>100% Working | No Ads | Fast Download</p>
+            <div class="security-badge">🔒 Fast & Secure</div>
         </div>
 
         <div class="main-content">
@@ -238,7 +361,7 @@
                 <p>Instagram Reels, Posts, Stories download karein</p>
                 
                 <div class="input-group">
-                    <input type="url" id="instaUrl" placeholder="https://www.instagram.com/p/..." required>
+                    <input type="url" id="instaUrl" placeholder="https://www.instagram.com/reel/..." required>
                     <button onclick="downloadInsta()" id="instaBtn">Download Karein</button>
                 </div>
             </div>
@@ -282,20 +405,31 @@
     </div>
 
     <script>
-        // Tab switching
+        // Performance optimization - DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Website loaded - Fast Version');
+        });
+
+        // Tab switching - Optimized
         function showTab(platform) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Update tabs
+            const buttons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
             
             event.target.classList.add('active');
             document.getElementById(platform + '-tab').classList.add('active');
+            
+            // Focus on input
+            setTimeout(() => {
+                const input = document.getElementById(platform === 'instagram' ? 'instaUrl' : 'ytUrl');
+                input.focus();
+            }, 100);
         }
 
-        // Show loading
+        // Show loading - Optimized
         function showLoading() {
             document.getElementById('loading').style.display = 'block';
             document.getElementById('result').style.display = 'none';
@@ -306,15 +440,20 @@
             document.getElementById('loading').style.display = 'none';
         }
 
-        // Show result
+        // Show result - Optimized
         function showResult(message, isSuccess) {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = message;
             resultDiv.className = `result ${isSuccess ? 'success' : 'error'}`;
             resultDiv.style.display = 'block';
+            
+            // Scroll to result
+            setTimeout(() => {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
         }
 
-        // YouTube Download Function
+        // Fast YouTube Download Function
         async function downloadYT() {
             const url = document.getElementById('ytUrl').value.trim();
             const button = document.getElementById('ytBtn');
@@ -324,7 +463,7 @@
                 return;
             }
 
-            // YouTube URL validation
+            // Fast YouTube URL validation
             const ytRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(ytRegex);
             
@@ -339,27 +478,29 @@
             showLoading();
 
             try {
-                // Use y2mate API for YouTube download
-                const downloadUrl = await getYouTubeDownloadUrl(videoId);
+                // Fast YouTube download service
+                const downloadUrl = `https://yt5s.com/en?q=https://www.youtube.com/watch?v=${videoId}`;
                 
-                if (downloadUrl) {
-                    showResult(`
-                        <h3>✅ YouTube Video Ready!</h3>
-                        <div class="video-preview">
-                            <p>Video successfully downloaded</p>
-                            <a href="${downloadUrl}" class="download-btn" download="youtube_video.mp4">
-                                📥 Video Download Karein
-                            </a>
-                            <p style="margin-top: 10px; font-size: 0.9rem;">
-                                <small>Right-click → "Save link as" for direct download</small>
-                            </p>
-                        </div>
-                    `, true);
-                } else {
-                    showResult('❌ Video download nahi ho paya. Kripya different video try karein.', false);
-                }
+                showResult(`
+                    <h3>✅ YouTube Download Ready!</h3>
+                    <p>Download page open ho raha hai...</p>
+                    <div style="margin-top: 15px;">
+                        <a href="${downloadUrl}" target="_blank" class="download-btn">
+                            📥 Download Page Open Karein
+                        </a>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: #666;">
+                        Agar naya tab nahi khulta toh popup blocker check karein
+                    </p>
+                `, true);
+
+                // Fast redirect
+                setTimeout(() => {
+                    window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+                }, 500);
+
             } catch (error) {
-                showResult('❌ Download error. Please try again with different video.', false);
+                showResult('❌ Download error. Please try again.', false);
             } finally {
                 button.disabled = false;
                 button.textContent = 'Download Karein';
@@ -367,7 +508,7 @@
             }
         }
 
-        // Instagram Download Function
+        // Fast Instagram Download Function
         async function downloadInsta() {
             const url = document.getElementById('instaUrl').value.trim();
             const button = document.getElementById('instaBtn');
@@ -387,26 +528,29 @@
             showLoading();
 
             try {
-                const downloadUrl = await getInstagramDownloadUrl(url);
+                // Fast Instagram download service
+                const downloadUrl = `https://instasave.website/download.php?url=${encodeURIComponent(url)}`;
                 
-                if (downloadUrl) {
-                    showResult(`
-                        <h3>✅ Instagram Video Ready!</h3>
-                        <div class="video-preview">
-                            <p>Video successfully downloaded</p>
-                            <a href="${downloadUrl}" class="download-btn" download="instagram_video.mp4">
-                                📥 Video Download Karein
-                            </a>
-                            <p style="margin-top: 10px; font-size: 0.9rem;">
-                                <small>Right-click → "Save link as" for direct download</small>
-                            </p>
-                        </div>
-                    `, true);
-                } else {
-                    showResult('❌ Video download nahi ho paya. Kripya public video ka link use karein.', false);
-                }
+                showResult(`
+                    <h3>✅ Instagram Download Ready!</h3>
+                    <p>Download page open ho raha hai...</p>
+                    <div style="margin-top: 15px;">
+                        <a href="${downloadUrl}" target="_blank" class="download-btn">
+                            📥 Download Page Open Karein
+                        </a>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: #666;">
+                        Agar naya tab nahi khulta toh popup blocker check karein
+                    </p>
+                `, true);
+
+                // Fast redirect
+                setTimeout(() => {
+                    window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+                }, 500);
+
             } catch (error) {
-                showResult('❌ Download error. Please try again with different video.', false);
+                showResult('❌ Download error. Please try again.', false);
             } finally {
                 button.disabled = false;
                 button.textContent = 'Download Karein';
@@ -414,102 +558,7 @@
             }
         }
 
-        // YouTube Download URL Generator
-        async function getYouTubeDownloadUrl(videoId) {
-            try {
-                // Multiple download options
-                const downloadOptions = [
-                    `https://www.y2mate.com/mates/en68/analyze/ajax`,
-                    `https://loader.to/api/download?url=https://www.youtube.com/watch?v=${videoId}&format=mp4`,
-                    `https://api.vevioz.com/api/button/mp4/${videoId}`
-                ];
-
-                // Try different services
-                for (let serviceUrl of downloadOptions) {
-                    try {
-                        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(serviceUrl)}`);
-                        const data = await response.json();
-                        
-                        if (data && data.contents) {
-                            // Parse the response to find download link
-                            const content = data.contents;
-                            if (content.includes('download') || content.includes('mp4')) {
-                                // Extract download URL from response
-                                const urlMatch = content.match(/(https?:\/\/[^\s"'<>]+\.mp4)/);
-                                if (urlMatch) return urlMatch[1];
-                            }
-                        }
-                    } catch (e) {
-                        continue; // Try next service
-                    }
-                }
-
-                // Fallback: Use y2mate direct
-                return `https://www.y2mate.com/mates/convert?url=https://www.youtube.com/watch?v=${videoId}&format=MP4`;
-                
-            } catch (error) {
-                console.error('YouTube download error:', error);
-                return null;
-            }
-        }
-
-        // Instagram Download URL Generator
-        async function getInstagramDownloadUrl(url) {
-            try {
-                // Use instagram downloader APIs
-                const services = [
-                    `https://downloadgram.com/process?url=${encodeURIComponent(url)}`,
-                    `https://instasave.website/download.php?url=${encodeURIComponent(url)}`,
-                    `https://igram.io/api/download?url=${encodeURIComponent(url)}`
-                ];
-
-                for (let serviceUrl of services) {
-                    try {
-                        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(serviceUrl)}`);
-                        const data = await response.json();
-                        
-                        if (data && data.contents) {
-                            const content = data.contents;
-                            // Look for video URL in response
-                            const videoUrlMatch = content.match(/(https?:\/\/[^\s"'<>]+\.mp4\?[^\s"'<>]+)/);
-                            if (videoUrlMatch) return videoUrlMatch[1];
-                        }
-                    } catch (e) {
-                        continue;
-                    }
-                }
-
-                // Fallback to direct Instagram video URL pattern
-                return await getDirectInstagramUrl(url);
-                
-            } catch (error) {
-                console.error('Instagram download error:', error);
-                return null;
-            }
-        }
-
-        // Get direct Instagram URL (simplified)
-        async function getDirectInstagramUrl(url) {
-            try {
-                // Use CORS proxy to fetch Instagram page
-                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-                const data = await response.json();
-                
-                if (data.contents) {
-                    // Extract video URL from Instagram page
-                    const regex = /"video_url":"([^"]+)"/;
-                    const match = data.contents.match(regex);
-                    if (match && match[1]) {
-                        return match[1].replace(/\\u0026/g, '&');
-                    }
-                }
-                return null;
-            } catch (error) {
-                return null;
-            }
-        }
-
-        // Enter key support
+        // Fast Enter key support
         document.getElementById('instaUrl').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') downloadInsta();
         });
@@ -518,12 +567,10 @@
             if (e.key === 'Enter') downloadYT();
         });
 
-        // Add service worker for better performance (optional)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('Service Worker Registered'))
-                .catch(() => console.log('Service Worker Not Supported'));
-        }
+        // Auto-focus on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('instaUrl').focus();
+        });
     </script>
 </body>
 </html>
